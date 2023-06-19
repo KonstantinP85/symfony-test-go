@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+    db:
+        image: postgres:14.1-alpine
+        container_name: db
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER:-postgres}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+        ports:
+            - '5432:5432'
+        volumes:
+            - db:/var/lib/postgresql/data
+
+    rabbitmq:
+        container_name: rabbitmq
+        image: rabbitmq:3.7-management
+        environment:
+            - RABBITMQ_DEFAULT_USER=guest
+            - RABBITMQ_DEFAULT_PASSWORD=guest
+        ports:
+            - '5672:5672'
+            - '15672:15672'
+
+volumes:
+    db:
+        driver: local
